@@ -2,7 +2,9 @@ package controller
 
 import (
 	"encoding/json"
+	"model"
 	"net/http"
+	"service"
 )
 
 type Connect struct {
@@ -12,13 +14,16 @@ type Connect struct {
 
 func Read(responseWriter http.ResponseWriter, request *http.Request) {
 
-	db := request.URL.Query().Get("db")
-	id := request.URL.Query().Get("id")
+	// db := request.URL.Query().Get("db")
+	// id := request.URL.Query().Get("id")
 
-	connectData := &Connect{
-		DB: db,
-		Id: id}
-	JSONConnectData, _ := json.Marshal(connectData)
+	// connectData := &Connect{
+	// 	DB: db,
+	// 	Id: id}
+
+	var sayhi model.Sayhi = service.ReadSayhiFormLevelDB()
+
+	JSONConnectData, _ := json.Marshal(sayhi)
 
 	responseWriter.Write(JSONConnectData)
 }
